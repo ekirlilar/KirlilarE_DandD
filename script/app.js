@@ -1,17 +1,81 @@
 (() => {
+	const puzzleButtons = document.querySelectorAll('#buttonHolder img'),
+				puzzlePieces = document.querySelectorAll('.puzzle-pieces img'),
+				dropZones = document.querySelectorAll('.drop-zone'),
+				gameBoard = document.querySelector('.puzzle-board');
+				puzzlePieceMain = document.querySelector('.puzzle-pieces');
+
+	const pieceNames = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 	// set up the puzzle pieces and boards
-	const puzzleButtons = document.querySelectorAll('#buttonHolder img');
 
 	function changeImageSet() {
-		// change all the image elements on the page -> draggable image sources,
-		// and set the drop zone background
+		// change all the image elements on the page -> draggable image sources
+		// change the image elements on the left to match the selected puzzle
+		//forEach = looping
+		pieceNames.forEach((piece, index) => {
+			puzzlePieces[index].src = `images/${piece + this.dataset.puzzleref}.jpg`;
+			puzzlePieces[index].id = `${piece + this.dataset.puzzzleref}`;
 
-		debugger;
+		});
+
+		//and set the drop zone background image based on the puzzle the user selects
+		gameBoard.style.backgroundImage = `url(images/backGround${this.dataset.puzzleref}.jpg)`;
+		//debugger;
+		}
+
+		function reset(){
+			for (let i=0; i < dropZones.length; i++){
+				if(dropZones[i].childNodes.length != 0)
+				puzzlePieceMain.appendChild(dropZones[i].firstChild);
+			}
+		}
+
+	function allowDrag(event) {
+		console.log('started dragging an image');
+		event.dataTransfer.setData("text/plain", this.id);
+
 	}
 
-	// add event handling here -> how is the user going to use our app?
-	// what triggers do we need?
+	function allowDragOver(event) {
+		event.preventDefault();
+		console.log('dragged over a drop zone');
+	}
 
-	// click on the bottom buttons to change the puzzle image we're working with
+	function allowDrop(event) {
+		//event.preventDefault();
+		// console.log('dragged on a drop zone');
+
+		let currentImage = event.dataTransfer.getData("text/plain");
+		// add that image to whaetever drop zone we're dropping our image on
+			if (this.childNodes.length === 0){
+
+ 	this.appendChild(document.querySelector(`#${currentImage}`));
+ }
+ else if (this.childNodes.length > 0){
+ 	this.appendChild(document.querySelector(`#${currentImage}`));
+
+ 	puzzlePieceMain.appendChild(this.firstChild);
+ }
+ }
+
+
+
+
+	// add event handling here -> how is user going to use our app?
+	//what triggers do we need?
+	puzzleButtons.forEach(button => button.addEventListener('click', reset));
+
+	// click on the bottom buttons to change the puzzle image we're working wtih
 	puzzleButtons.forEach(button => button.addEventListener('click', changeImageSet));
+
+	puzzlePieces.forEach(piece => piece.addEventListener('dragstart', allowDrag));
+
+	dropZones.forEach(zone =>  {
+		zone.addEventListener('dragover', allowDragOver);
+		zone.addEventListener('drop', allowDrop);
+	});
+	// call the function and pass in the first nav button as a reference
+	//research call, apply and bind -> look at MDN
+	changeImageSet.call(puzzleButtons[0]);
+
 })();
