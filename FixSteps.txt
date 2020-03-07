@@ -1,0 +1,42 @@
+PuzzleFix
+
+Steps:
+
+
+
+1. Find the Bug 
+
+
+
+Finding the problem and checking the dropzone (the puzzle box) empty or not, 
+and if it is empty; don't do anything, if it not see the 
+puzzle pieces if it is necessary.
+
+
+
+
+
+2. add the Reset function 
+
+
+
+In order to reset the puzzle pieces, when we start a new game, 
+make the thumbnail puzzle pictures reset buttons.
+
+
+
+
+
+3. add the CODE
+
+
+
+Writing the necessary function and code in the proper place and fail epically and break the whole game.
+
+Keep writing until the game gave up or simply pity me.
+
+
+
+
+
+Thank you! 
